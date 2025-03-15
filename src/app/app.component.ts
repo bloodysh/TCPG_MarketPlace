@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { CardsTableComponent } from "./cards-table/cards-table.component";
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, CardsTableComponent],
+  imports: [RouterOutlet, RouterLink, RouterLinkActive, CardsTableComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
   standalone: true
