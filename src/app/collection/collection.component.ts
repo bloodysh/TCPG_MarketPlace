@@ -30,7 +30,7 @@ export class CollectionComponent {
         this.router.navigate(['/mythicalIsland']);
         break;
       case 3:
-        this.router.navigate(['/spaceTime']);
+        this.router.navigate(['/spacetime']);
         break;
       case 4:
         this.router.navigate(['/promoCards']);

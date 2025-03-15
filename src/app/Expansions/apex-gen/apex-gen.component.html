@@ -1,5 +1,6 @@
 <div class="container">
     <ng-container *ngFor="let setEntry of groupedCards | keyvalue">
+        <h2 class="set-header"></h2>
         <div class="row">
             <ng-container *ngFor="let card of setEntry.value; let i = index">
                 <div class="col-md-2.4 col-sm-6 mb-4" style="flex: 0 0 20%; max-width: 20%;">
