@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CardsTableComponent } from './cards-table.component';
+import { MythicalIslandComponent } from './mythical-island.component';
 
-describe('CardsTableComponent', () => {
-  let component: CardsTableComponent;
-  let fixture: ComponentFixture<CardsTableComponent>;
+describe('MythicalIslandComponent', () => {
+  let component: MythicalIslandComponent;
+  let fixture: ComponentFixture<MythicalIslandComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [CardsTableComponent]
+      imports: [MythicalIslandComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(CardsTableComponent);
+    fixture = TestBed.createComponent(MythicalIslandComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -1,17 +1,17 @@
 import { Card as CardType} from '@/types/Card';
 import { Component, Input, OnInit, Output, EventEmitter, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { a1Cards } from '@/CardsDB';
+import { a1aCards } from '@/CardsDB';
 
 
 @Component({
-  selector: 'app-cards-table',
+  selector: 'app-mythical-island',
   imports: [CommonModule],
-  templateUrl: './cards-table.component.html',
-  styleUrl: './cards-table.component.css',
+  templateUrl: './mythical-island.component.html',
+  styleUrl: './mythical-island.component.css',
   standalone: true
 })
-export class CardsTableComponent implements OnInit, AfterViewInit{
+export class MythicalIslandComponent implements OnInit, AfterViewInit{
   @Input() cards: CardType[] = [];
   @Input() cardClick = new EventEmitter<string>();
 
@@ -19,7 +19,7 @@ export class CardsTableComponent implements OnInit, AfterViewInit{
 
   constructor() {
     if (this.cards.length === 0) {
-      this.cards = a1Cards;
+      this.cards = a1aCards;
     }
   }
 
