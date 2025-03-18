@@ -1,0 +1,42 @@
+import { Component, inject } from '@angular/core';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { AsyncPipe } from '@angular/common';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatButtonModule } from '@angular/material/button';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatListModule } from '@angular/material/list';
+import { MatIconModule } from '@angular/material/icon';
+import { Observable } from 'rxjs';
+import { map, shareReplay } from 'rxjs/operators';
+import {RouterLink, RouterLinkActive, RouterOutlet} from '@angular/router';
+
+@Component({
+  selector: 'app-main-navigation',
+  templateUrl: './main-navigation.component.html',
+  styleUrl: './main-navigation.component.css',
+  imports: [
+    MatToolbarModule,
+    MatButtonModule,
+    MatSidenavModule,
+    MatListModule,
+    MatIconModule,
+    AsyncPipe,
+    RouterLink,
+    RouterLinkActive,
+    RouterOutlet,
+  ]
+})
+export class MainNavigationComponent {
+  private breakpointObserver = inject(BreakpointObserver);
+
+  isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
+    .pipe(
+      map(result => result.matches),
+      shareReplay()
+    );
+
+  routerLinks: {name: string, href: string}[] = [
+    {name: 'Home', href: '/home'},
+    {name: 'Collections', href: '/collection'},
+  ] as const;
+}

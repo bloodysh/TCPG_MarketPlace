@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import {MatGridList, MatGridTile} from '@angular/material/grid-list';
 
 @Component({
   selector: 'app-collection',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, MatGridList, MatGridTile],
   templateUrl: './collection.component.html',
   styleUrls: ['./collection.component.css']
 })
