@@ -1,22 +1,22 @@
 import { initializeApp } from 'firebase/app';
 import { getFirestore, collection, doc, setDoc, writeBatch } from 'firebase/firestore';
 import { environment } from './environments/environment';
-import { a1Cards, a1aCards, a2Cards, paCards } from './CardsDB';
+import { a1Cards, a1aCards, a2Cards, paCards, allCards } from './CardsDB';
 
 // Initialize Firebase
 const app = initializeApp(environment.firebase);
 const db = getFirestore(app);
 
 // Migration function using batched writes for better performance
-async function migrateCardsToFirestore() {
+async function migrateAllCardsToSingleCollection() {
   try {
-    console.log("Starting migration to Firestore...");
+    console.log("Starting migration to Firestore single collection...");
     
-    // Migrate each card set
-    await migrateCardSet(a1Cards, 'A1');
-    await migrateCardSet(a1aCards, 'A1a');
-    await migrateCardSet(a2Cards, 'A2');
-    await migrateCardSet(paCards, 'P-A');
+    // Combine all cards and migrate to a single collection
+    const allCardsArray = [...a1Cards, ...a1aCards, ...a2Cards, ...paCards];
+    
+    // Migrate all cards to a single collection
+    await migrateCardSet(allCardsArray, 'AllCards');
     
     console.log("Migration completed successfully!");
   } catch (error) {
@@ -24,10 +24,13 @@ async function migrateCardsToFirestore() {
   }
 }
 
-// Helper function to migrate a set of cards using batch operations
+// Helper function to migrate cards using batch operations
 async function migrateCardSet(cards: any[], collectionName: string) {
   try {
-    console.log(`Migrating ${cards.length} cards to ${collectionName} collection...`);
+    console.log(`Migrating ${cards.length} cards to ${collectionName} collection`);
+    
+    // Track generated IDs to detect duplicates
+    const usedDocIds = new Set();
     
     // Firestore can only process 500 operations in a batch
     const BATCH_SIZE = 450;
@@ -37,17 +40,50 @@ async function migrateCardSet(cards: any[], collectionName: string) {
       const batch = writeBatch(db);
       const batchCards = cards.slice(i, i + BATCH_SIZE);
       
-      batchCards.forEach((card, index) => {
-        // Add order field for consistent sorting
-        card.order = i + index;
+      for (let index = 0; index < batchCards.length; index++) {
+        const card = batchCards[index];
+        const orderValue = i + index;
+        card.order = orderValue;
         
-        // Create document reference with padded ID for better sorting
-        const paddedIndex = String(i + index).padStart(4, '0');
-        const docRef = doc(collection(db, collectionName), `${collectionName}-${paddedIndex}`);
+        // Generate a unique document ID
+        let docId;
+        
+        // Special handling for Promo-A cards
+        if (card.expansion === 'P-A') {
+          // Zero-pad the card's ID
+          const paddedId = card.id.toString().padStart(4, '0');
+          docId = `P-A-${paddedId}`;
+        }
+        // Regular handling for other cards
+        else if (card.card_id && card.card_id.includes('-')) {
+          // Extract the expansion prefix and numeric ID
+          const parts = card.card_id.split('-');
+          const prefix = parts[0]; // First part is expansion
+          const id = parts[parts.length - 1]; // Last part is the ID number
+          
+          // Zero-pad the ID
+          const paddedId = id.padStart(4, '0');
+          docId = `${prefix}-${paddedId}`;
+        } else {
+          // Fallback
+          docId = `${card.expansion || 'UNKNOWN'}-${orderValue.toString().padStart(4, '0')}`;
+        }
+        
+        // Check for duplicates
+        if (usedDocIds.has(docId)) {
+          console.warn(`⚠️ Duplicate document ID detected: ${docId} for card:`, card);
+          // Create an alternative ID by appending a timestamp and random number
+          docId = `${docId}-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
+          console.log(`Generated alternative ID: ${docId}`);
+        }
+        
+        // Remember this ID
+        usedDocIds.add(docId);
         
         // Add to batch
+        const docRef = doc(collection(db, collectionName), docId);
         batch.set(docRef, card);
-      });
+      }
       
       // Commit this batch
       await batch.commit();
@@ -56,11 +92,12 @@ async function migrateCardSet(cards: any[], collectionName: string) {
     }
     
     console.log(`Successfully migrated ${cards.length} cards to ${collectionName}`);
+    console.log(`Generated ${usedDocIds.size} unique document IDs`);
   } catch (error) {
-    console.error(`Error migrating ${collectionName}:`, error);
+    console.error(`Error migrating to ${collectionName}:`, error);
     throw error;
   }
 }
 
 // Execute migration
-migrateCardsToFirestore();
+migrateAllCardsToSingleCollection();

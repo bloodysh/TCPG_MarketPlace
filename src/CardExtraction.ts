@@ -6,6 +6,7 @@ import {
   collection, 
   getDocs, 
   query, 
+  where,
   orderBy,
   onSnapshot 
 } from 'firebase/firestore';
@@ -17,8 +18,10 @@ import { map } from 'rxjs/operators';
 const app = initializeApp(environment.firebase);
 const db = getFirestore(app);
 
+// Collection name where all cards are stored
+const ALL_CARDS_COLLECTION = 'AllCards';
+
 // Create BehaviorSubjects to track card data
-// BehaviorSubject retains the current value and emits it to new subscribers
 export const a1Cards$ = new BehaviorSubject<Card[]>([]);
 export const a1aCards$ = new BehaviorSubject<Card[]>([]);
 export const a2Cards$ = new BehaviorSubject<Card[]>([]);
@@ -26,73 +29,55 @@ export const paCards$ = new BehaviorSubject<Card[]>([]);
 export const allCards$ = new BehaviorSubject<Card[]>([]);
 export const expansions$ = new BehaviorSubject<Expansion[]>([]);
 
-// Process card data
+// Process card data if needed (mostly for backward compatibility)
 const update = (cards: Card[], expansionName: string) => {
   for (const card of cards) {
+    // Ensure expansion field is set
     card.expansion = expansionName;
+    
+    // Ensure card_id is set
     // @ts-ignore
-    card.card_id = card.linkedCardID || `${expansionName}-${card.id}`;
+    if (!card.card_id) {
+      // @ts-ignore
+      card.card_id = card.linkedCardID || `${expansionName}-${card.id}`;
+    }
   }
   return cards;
 }
 
-// Set up real-time listeners for each collection
+// Set up real-time listener for the single collection
 export function setupRealtimeListeners() {
-  // A1 collection
-  const a1Query = query(collection(db, 'A1'), orderBy('order', 'asc'));
-  onSnapshot(a1Query, snapshot => {
+  // Listen to all cards with ordering by expansion and order fields
+  const allCardsQuery = query(
+    collection(db, ALL_CARDS_COLLECTION), 
+    orderBy('expansion', 'asc'),
+    orderBy('order', 'asc')
+  );
+  
+  onSnapshot(allCardsQuery, snapshot => {
+    console.log(`Received ${snapshot.docs.length} cards from AllCards collection`);
+    
+    // Process all cards at once
     const cards = snapshot.docs.map(doc => doc.data() as Card);
-    const updatedCards = update(cards, 'A1');
-    a1Cards$.next(updatedCards);
-    updateAllCards();
+    
+    // Filter cards by expansion and update the corresponding BehaviorSubjects
+    const a1 = cards.filter(card => card.expansion === 'A1');
+    const a1a = cards.filter(card => card.expansion === 'A1a');
+    const a2 = cards.filter(card => card.expansion === 'A2');
+    const pa = cards.filter(card => card.expansion === 'P-A');
+    
+    // Update BehaviorSubjects
+    a1Cards$.next(update(a1, 'A1'));
+    a1aCards$.next(update(a1a, 'A1a'));
+    a2Cards$.next(update(a2, 'A2'));
+    paCards$.next(update(pa, 'P-A'));
+    allCards$.next(cards);
+    
+    // Update expansions
+    updateExpansions();
   }, error => {
-    console.error('Error listening to A1 collection:', error);
+    console.error('Error listening to AllCards collection:', error);
   });
-
-  // A1a collection
-  const a1aQuery = query(collection(db, 'A1a'), orderBy('order', 'asc'));
-  onSnapshot(a1aQuery, snapshot => {
-    const cards = snapshot.docs.map(doc => doc.data() as Card);
-    const updatedCards = update(cards, 'A1a');
-    a1aCards$.next(updatedCards);
-    updateAllCards();
-  }, error => {
-    console.error('Error listening to A1a collection:', error);
-  });
-
-  // A2 collection
-  const a2Query = query(collection(db, 'A2'), orderBy('order', 'asc'));
-  onSnapshot(a2Query, snapshot => {
-    const cards = snapshot.docs.map(doc => doc.data() as Card);
-    const updatedCards = update(cards, 'A2');
-    a2Cards$.next(updatedCards);
-    updateAllCards();
-  }, error => {
-    console.error('Error listening to A2 collection:', error);
-  });
-
-  // P-A collection
-  const paQuery = query(collection(db, 'P-A'), orderBy('order', 'asc'));
-  onSnapshot(paQuery, snapshot => {
-    const cards = snapshot.docs.map(doc => doc.data() as Card);
-    const updatedCards = update(cards, 'P-A');
-    paCards$.next(updatedCards);
-    updateAllCards();
-  }, error => {
-    console.error('Error listening to P-A collection:', error);
-  });
-}
-
-// Update the allCards BehaviorSubject whenever any individual card set changes
-function updateAllCards() {
-  const all = [
-    ...a1Cards$.getValue(),
-    ...a1aCards$.getValue(),
-    ...a2Cards$.getValue(),
-    ...paCards$.getValue()
-  ];
-  allCards$.next(all);
-  updateExpansions();
 }
 
 // Update expansions whenever cards change
@@ -146,29 +131,31 @@ export async function fetchAllCards() {
   try {
     console.log("Manually fetching all cards from Firestore...");
     
-    // Fetch all collections in parallel
-    const [a1Cards, a1aCards, a2Cards, paCards] = await Promise.all([
-      fetchCollection('A1'),
-      fetchCollection('A1a'),
-      fetchCollection('A2'),
-      fetchCollection('P-A')
-    ]);
+    // Fetch all cards in a single query
+    const cards = await fetchAllCardsFromCollection();
+    
+    // Filter by expansion
+    const a1Cards = cards.filter(card => card.expansion === 'A1');
+    const a1aCards = cards.filter(card => card.expansion === 'A1a');
+    const a2Cards = cards.filter(card => card.expansion === 'A2');
+    const paCards = cards.filter(card => card.expansion === 'P-A');
     
     // Update BehaviorSubjects
     a1Cards$.next(a1Cards);
     a1aCards$.next(a1aCards);
     a2Cards$.next(a2Cards);
     paCards$.next(paCards);
+    allCards$.next(cards);
     
-    // Update the combined card list
-    updateAllCards();
+    // Update expansions
+    updateExpansions();
     
     return {
       a1: a1Cards,
       a1a: a1aCards,
       a2: a2Cards,
       pa: paCards,
-      all: [...a1Cards, ...a1aCards, ...a2Cards, ...paCards]
+      all: cards
     };
   } catch (error) {
     console.error("Error fetching cards:", error);
@@ -182,21 +169,53 @@ export async function fetchAllCards() {
   }
 }
 
-// Helper function to fetch a specific collection
-async function fetchCollection(collectionName: string): Promise<Card[]> {
+// Helper function to fetch all cards from the single collection
+async function fetchAllCardsFromCollection(): Promise<Card[]> {
   try {
-    const q = query(collection(db, collectionName), orderBy('order', 'asc'));
+    // Order by expansion and then by order field
+    const q = query(
+      collection(db, ALL_CARDS_COLLECTION), 
+      orderBy('expansion', 'asc'),
+      orderBy('order', 'asc')
+    );
+    
     const snapshot = await getDocs(q);
     
     if (snapshot.empty) {
-      console.log(`No documents found in ${collectionName}`);
+      console.log(`No documents found in ${ALL_CARDS_COLLECTION}`);
       return [];
     }
     
     const cards = snapshot.docs.map(doc => doc.data() as Card);
-    return update(cards, collectionName);
+    console.log(`Retrieved ${cards.length} cards from ${ALL_CARDS_COLLECTION}`);
+    return cards;
   } catch (error) {
-    console.error(`Error fetching ${collectionName}:`, error);
+    console.error(`Error fetching cards from ${ALL_CARDS_COLLECTION}:`, error);
+    return [];
+  }
+}
+
+// Helper function to fetch cards from a specific expansion
+// (Maintains backward compatibility with code that expects to fetch by collection)
+async function fetchCardsForExpansion(expansionName: string): Promise<Card[]> {
+  try {
+    const q = query(
+      collection(db, ALL_CARDS_COLLECTION),
+      where('expansion', '==', expansionName),
+      orderBy('order', 'asc')
+    );
+    
+    const snapshot = await getDocs(q);
+    
+    if (snapshot.empty) {
+      console.log(`No documents found for expansion ${expansionName}`);
+      return [];
+    }
+    
+    const cards = snapshot.docs.map(doc => doc.data() as Card);
+    return update(cards, expansionName);
+  } catch (error) {
+    console.error(`Error fetching cards for expansion ${expansionName}:`, error);
     return [];
   }
 }
@@ -212,7 +231,6 @@ export function getCardById(cardId: string): Observable<Card | undefined> {
 setupRealtimeListeners();
 
 // Export card arrays as a fallback for code that expects arrays directly
-// These will be updated from the BehaviorSubjects
 export let a1Cards: Card[] = [];
 export let a1aCards: Card[] = [];
 export let a2Cards: Card[] = [];
