@@ -175,8 +175,7 @@ async function fetchAllCardsFromCollection(): Promise<Card[]> {
     // Order by expansion and then by order field
     const q = query(
       collection(db, ALL_CARDS_COLLECTION), 
-      orderBy('expansion', 'asc'),
-      orderBy('order', 'asc')
+      orderBy('expansion', 'asc')
     );
     
     const snapshot = await getDocs(q);
