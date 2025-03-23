@@ -13,6 +13,7 @@ import {
 import { environment } from './environments/environment';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { log } from 'console';
 
 // Initialize Firebase
 const app = initializeApp(environment.firebase);
@@ -174,8 +175,7 @@ async function fetchAllCardsFromCollection(): Promise<Card[]> {
   try {
     // Order by expansion and then by order field
     const q = query(
-      collection(db, ALL_CARDS_COLLECTION), 
-      orderBy('expansion', 'asc')
+      collection(db, ALL_CARDS_COLLECTION)
     );
     
     const snapshot = await getDocs(q);
@@ -200,8 +200,7 @@ async function fetchCardsForExpansion(expansionName: string): Promise<Card[]> {
   try {
     const q = query(
       collection(db, ALL_CARDS_COLLECTION),
-      where('expansion', '==', expansionName),
-      orderBy('order', 'asc')
+      where('expansion', '==', expansionName)
     );
     
     const snapshot = await getDocs(q);
@@ -219,6 +218,8 @@ async function fetchCardsForExpansion(expansionName: string): Promise<Card[]> {
   }
 }
 
+
+
 // Get a specific card by ID
 export function getCardById(cardId: string): Observable<Card | undefined> {
   return allCards$.pipe(
@@ -228,6 +229,11 @@ export function getCardById(cardId: string): Observable<Card | undefined> {
 
 // Start listening to changes
 setupRealtimeListeners();
+
+export let a1Cards1 = fetchCardsForExpansion('A1');
+export let a1aCards1 = fetchCardsForExpansion('A1a');
+export let a2Cards1 = fetchCardsForExpansion('A2');
+export let paCards1 = fetchCardsForExpansion('P-A');
 
 // Export card arrays as a fallback for code that expects arrays directly
 export let a1Cards: Card[] = [];
