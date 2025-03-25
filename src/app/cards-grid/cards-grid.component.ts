@@ -2,14 +2,15 @@ import {Component, Input} from '@angular/core';
 import {Card} from '@/types/Card';
 import {MatGridList, MatGridTile} from '@angular/material/grid-list';
 import {Observable} from 'rxjs';
-import {AsyncPipe} from '@angular/common';
+import {AsyncPipe, NgOptimizedImage} from '@angular/common';
 
 @Component({
   selector: 'app-cards-grid',
   imports: [
     MatGridList,
     MatGridTile,
-    AsyncPipe
+    AsyncPipe,
+    NgOptimizedImage
   ],
   templateUrl: './cards-grid.component.html',
   styleUrl: './cards-grid.component.css'

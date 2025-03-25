@@ -1,18 +1,25 @@
 import {Component, inject} from '@angular/core';
 import {Auth, sendSignInLinkToEmail} from '@angular/fire/auth';
 import {FormControl, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
+import {MatButton} from '@angular/material/button';
+import {MatFormField, MatLabel} from '@angular/material/form-field';
+import {MatInput} from '@angular/material/input';
 
 @Component({
-  selector: 'app-log-in-button',
+  selector: 'app-login',
   imports: [
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatButton,
+    FormsModule,
+    MatFormField,
+    MatLabel,
+    MatInput,
   ],
-  templateUrl: './log-in-button.component.html',
+  templateUrl: './login.component.html',
   styleUrl: './log-in-button.component.css'
 })
-export class LogInButtonComponent {
+export class LoginComponent {
   auth = inject(Auth);
-  // provider = new GoogleAuthProvider();
 
   email = new FormControl("", [Validators.required, Validators.email]);
 
@@ -26,5 +33,4 @@ export class LogInButtonComponent {
       localStorage.setItem('email', email);
     });
   }
-
 }

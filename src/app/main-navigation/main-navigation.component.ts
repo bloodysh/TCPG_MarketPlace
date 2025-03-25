@@ -9,6 +9,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import {RouterLink, RouterLinkActive, RouterOutlet} from '@angular/router';
+import {Auth, user} from '@angular/fire/auth';
 
 @Component({
   selector: 'app-main-navigation',
@@ -28,6 +29,8 @@ import {RouterLink, RouterLinkActive, RouterOutlet} from '@angular/router';
 })
 export class MainNavigationComponent {
   private breakpointObserver = inject(BreakpointObserver);
+  private auth = inject(Auth);
+  user$ = user(this.auth);
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
@@ -35,8 +38,10 @@ export class MainNavigationComponent {
       shareReplay()
     );
 
-  routerLinks: {name: string, href: string}[] = [
+  routerLinks: {name: string, href: string, loggedOutOnly?: boolean; loggedInOnly?: boolean}[] = [
     {name: 'Home', href: '/home'},
     {name: 'Collections', href: '/collection'},
+    {name: 'Login', href: '/login', loggedOutOnly: true},
+    {name: 'Logout', href: '/logout', loggedInOnly: true}
   ] as const;
 }

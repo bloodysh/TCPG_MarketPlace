@@ -1,8 +1,9 @@
-import {Component, inject, OnInit} from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {Card} from '@/types/Card';
 import {Observable, switchMap} from 'rxjs';
 import {CardsGridComponent} from '@/app/cards-grid/cards-grid.component';
+import {Firestore, collection, query, where, orderBy, collectionData} from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-cards',
@@ -13,6 +14,7 @@ import {CardsGridComponent} from '@/app/cards-grid/cards-grid.component';
 })
 export class CardsComponent {
   private readonly route = inject(ActivatedRoute);
+  private firestore = inject(Firestore);
 
   selectedCardSet: string = '';
   cards$: Observable<Card[]>;
@@ -20,7 +22,13 @@ export class CardsComponent {
   constructor() {
     this.cards$ = this.route.paramMap.pipe(switchMap((params) => {
       this.selectedCardSet = params.get('setId')!;
-      return [];
+      const cardsCollection = collection(this.firestore, 'AllCards');
+      const cardsQuery = query(
+        cardsCollection,
+        where('expansion', '==', this.selectedCardSet),
+        orderBy("order")
+      );
+      return collectionData(cardsQuery) as Observable<Card[]>;
     }));
   }
 }
