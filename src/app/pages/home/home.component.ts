@@ -1,10 +1,16 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit, AfterViewInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterLink, RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  styleUrls: ['./home.component.css'],
+  standalone: true,
+  imports: [
+    CommonModule,
+    RouterLink
+  ],
 })
 export class HomeComponent implements OnInit, AfterViewInit {
   
