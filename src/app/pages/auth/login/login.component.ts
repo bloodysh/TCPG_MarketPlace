@@ -15,8 +15,7 @@ import {MatInput} from '@angular/material/input';
     MatLabel,
     MatInput,
   ],
-  templateUrl: './login.component.html',
-  styleUrl: './log-in-button.component.css'
+  templateUrl: './login.component.html'
 })
 export class LoginComponent {
   auth = inject(Auth);
