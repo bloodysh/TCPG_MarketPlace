@@ -1,13 +1,16 @@
+import { CommonModule } from '@angular/common';
 import {Component, inject, OnInit, signal} from '@angular/core';
 import {Auth, isSignInWithEmailLink, signInWithEmailLink} from '@angular/fire/auth';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-auth-handler-page',
-  imports: [],
+  imports: [CommonModule],
   template: '@if(error()){{{error()}}}'
 })
 export class AuthHandlerPageComponent implements OnInit {
   auth = inject(Auth);
+  router = inject(Router);
 
   error = signal<string|null>(null);
 
@@ -19,6 +22,7 @@ export class AuthHandlerPageComponent implements OnInit {
         return;
       }
       signInWithEmailLink(this.auth, email, window.location.href).then(console.log);
+      this.router.navigate(['/']);
     }
   }
 }
