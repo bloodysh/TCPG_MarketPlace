@@ -1,2 +1,90 @@
-
-<p>home works!</p>
+<div class="home-container">
+    <!-- Hero Section with Card Showcase -->
+    <section class="hero">
+      <div class="hero-content">
+        <h1>Pokemon Card Marketplace</h1>
+        <p class="tagline">Collect, Trade, and Battle with the Ultimate Pokemon TCG Platform</p>
+        <div class="hero-buttons">
+          <button routerLink="/marketplace" class="btn btn-primary">Explore Marketplace</button>
+          <button routerLink="/collection" class="btn btn-outline">View Your Collection</button>
+        </div>
+      </div>
+  
+      <!-- Interactive Card Showcase -->
+      <div class="card-showcase">
+        <div class="card-container">
+          <div class="card" id="card1">
+            <div class="card-inner">
+              <div class="card-front">
+                <div class="card-bg"></div>
+                <div class="card-shine"></div>
+                <img src="https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com/pocket/A1/A1_036_EN.webp" alt="Charizard Card" class="card-image">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  
+    <!-- Features Section -->
+    <section class="features">
+      <h2>Your Ultimate Pokemon Card Trading Platform</h2>
+      
+      <div class="feature-grid">
+        <div class="feature">
+          <div class="feature-icon">
+            <i class="fas fa-search"></i>
+          </div>
+          <h3>Browse Collections</h3>
+          <p>Explore thousands of Pokemon cards across all generations and expansions, from classic favorites to the latest releases.</p>
+        </div>
+        
+        
+        <div class="feature">
+          <div class="feature-icon">
+            <i class="fas fa-shopping-cart"></i>
+          </div>
+          <h3>Buy & Sell</h3>
+          <p>List your cards for sale or purchase from other trainers with our integrated marketplace features.</p>
+        </div>
+        
+      </div>
+    </section>
+  
+    <!-- Expansions Section -->
+    <section class="expansions">
+      <h2>Featured Expansions</h2>
+      <p>Our platform supports all the latest Pokemon card expansions</p>
+      
+      <div class="expansion-grid">
+        <div class="expansion" (click)="navigateToExpansion('A1')">
+          <img src="https://static0.gamerantimages.com/wordpress/wp-content/uploads/wm/2025/01/old-packs-tcg-pocket-pokemon.jpg" alt="Genetic Apex">
+          <h3>Genetic Apex</h3>
+        </div>
+        
+        <div class="expansion" (click)="navigateToExpansion('A1a')">
+          <img src="https://comicbook.com/wp-content/uploads/sites/4/2024/12/Mythical-Island-Booster-Packs.jpg" alt="Mythical Island">
+          <h3>Mythical Island</h3>
+        </div>
+        
+        <div class="expansion" (click)="navigateToExpansion('A2')">
+          <img src="https://static1.srcdn.com/wordpress/wp-content/uploads/2025/01/space-time-smackdown-packs.jpg" alt="Space-Time Smackdown">
+          <h3>Space-Time Smackdown</h3>
+        </div>
+        
+        <div class="expansion" (click)="navigateToExpansion('P-A')">
+          <img src="https://static0.gamerantimages.com/wordpress/wp-content/uploads/wm/2024/11/pokemon-tcg-pocket-promo-a-pack-cards-1.jpg" alt="Promo Packs">
+          <h3>Promo Packs</h3>
+        </div>
+      </div>
+    </section>
+  
+    <!-- Call to Action -->
+    <section class="cta">
+      <h2>Ready to Start Your Pokemon Journey?</h2>
+      <p>Join thousands of trainers already using our platform</p>
+      <button routerLink="/login" class="btn btn-primary btn-large">Sign Up Now</button>
+      <p class="cta-login">Already have an account? Log In</p>
+      <button routerLink="/login" class="btn btn-primary btn-large">Login</button>
+    </section>
+  </div>
