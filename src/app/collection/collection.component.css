@@ -1,7 +1,40 @@
 .collection-card {
   transition: transform 0.2s;
+  margin-bottom: 15px;
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  overflow: visible !important; 
+  box-sizing: border-box; 
+  padding: 0; 
 }
 
 .collection-card:hover {
   transform: translateY(-5px);
+}
+
+/* Fix for card images */
+.collection-card img {
+  max-width: 100%;
+  height: auto;
+  display: block; /* Remove any default spacing */
+  object-fit: contain; /* Keep aspect ratio without cropping */
+}
+
+.row [class*='col-'] {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.card {
+  border: none; 
+  overflow: visible;
+}
+
+.card-body {
+  padding: 10px;
+}
+
+.card-container {
+  margin: 0 -5px; 
 }
