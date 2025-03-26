@@ -1,0 +1,11 @@
+<form (ngSubmit)="onClickAuth()">
+  <mat-form-field>
+    <mat-label>E-mail</mat-label>
+    <input matInput type="email" [formControl]="email">
+  </mat-form-field>
+  <br>
+  <button mat-stroked-button type="submit">
+    Sign in
+  </button>
+</form>
+

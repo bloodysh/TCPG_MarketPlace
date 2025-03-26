@@ -1,9 +1,9 @@
-import type { Card } from './types/Card'
-import type { Expansion } from './types/Expansion'
-import A1 from './assets/cards/A1.json'
-import A1a from './assets/cards/A1a.json'
-import A2 from './assets/cards/A2.json'
-import PA from './assets/cards/P-A.json'
+import type { Card } from '@/types/Card'
+import type { Expansion } from '@/types/Expansion'
+import A1 from './cards/A1.json'
+import A1a from './cards/A1a.json'
+import A2 from './cards/A2.json'
+import PA from './cards/P-A.json'
 
 const update = (cards: Card[], expansionName : string) => {
   for (const card of cards) {

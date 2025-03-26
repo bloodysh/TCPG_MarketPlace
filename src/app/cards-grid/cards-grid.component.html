@@ -1,0 +1,7 @@
+<mat-grid-list cols="4" rowHeight="1:1.5" gutterSize="30">
+  @for (card of cards$|async; track card.card_id) {
+    <mat-grid-tile>
+      <img [ngSrc]="card.image" width="367" height="512" alt="{{ card.name }}">
+    </mat-grid-tile>
+  }
+</mat-grid-list>
