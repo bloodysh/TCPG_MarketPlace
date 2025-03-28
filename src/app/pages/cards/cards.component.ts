@@ -34,6 +34,8 @@ export class CardsComponent {
     }));
   }
 
+
+  //prix d'une carte en fonction de sa rareté
   getPrice(card: Card) {
     switch (card.rarity) {
       case '◊': this.price = 0.3; break;
