@@ -19,6 +19,8 @@ export class CardsComponent {
   selectedCardSet: string = '';
   cards$: Observable<Card[]>;
 
+  private price : number = 0;
+
   constructor() {
     this.cards$ = this.route.paramMap.pipe(switchMap((params) => {
       this.selectedCardSet = params.get('setId')!;
@@ -31,4 +33,20 @@ export class CardsComponent {
       return collectionData(cardsQuery) as Observable<Card[]>;
     }));
   }
-}
+
+
+  //prix d'une carte en fonction de sa rareté
+  getPrice(card: Card) {
+    switch (card.rarity) {
+      case '◊': this.price = 0.3; break;
+      case '◊◊': this.price = 0.5; break;
+      case '◊◊◊': this.price = 0.8; break;
+      case '◊◊◊◊': this.price = 1.5; break;
+      case '☆': this.price = 5; break;
+      case '☆☆': this.price = 10; break;
+      case '☆☆☆': this.price = 15; break;
+      case '♛': this.price = 50; break;
+      default: this.price = 0;
+  }
+  return this.price;
+}}
