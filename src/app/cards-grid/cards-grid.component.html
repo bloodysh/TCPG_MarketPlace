@@ -1,7 +1,19 @@
-<mat-grid-list cols="4" rowHeight="1:1.35" gutterSize="40">
+<mat-grid-list cols="4" rowHeight="1:1.50" gutterSize="60">
   @for (card of cards$|async; track card.card_id) {
     <mat-grid-tile>
-      <img [ngSrc]="card.image" width="367" height="512" alt="{{ card.name }}">
+      <div class="card-container">
+        <img [ngSrc]="card.image" width="367" height="512" alt="{{ card.name }}">
+        
+        <div class="card-overlay">
+          
+          <button class="add-to-collection-btn" (click)="addToCollection(card)">
+            <span class="material-icons">add</span> Add to Collection
+          </button>
+          <button class="remove-from-collection-btn" (click)="removeFromCollection(card.card_id)">
+            <span class="material-icons">remove</span> Remove from Collection
+          </button>
+        </div>
+      </div>
     </mat-grid-tile>
   }
 </mat-grid-list>

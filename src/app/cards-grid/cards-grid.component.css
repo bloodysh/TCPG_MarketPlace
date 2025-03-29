@@ -55,3 +55,44 @@ img {
     gap: 8px;
   }
 }
+
+.add-to-collection-btn {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  text-align: center;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s;
+}
+
+.add-to-collection-btn:hover {
+  background-color: #45a049;
+}
+
+.material-icons {
+  font-size: 18px;
+  margin-right: 4px;
+}
+
+.remove-from-collection-btn:hover {
+  background-color: #992121;
+}
+
+.remove-from-collection-btn {
+  background-color: #f04f10;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  text-align: center;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s;
+}

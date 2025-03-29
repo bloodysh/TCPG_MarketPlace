@@ -42,6 +42,7 @@ export class MainNavigationComponent {
     {name: 'Home', href: '/home'},
     {name: 'Collections', href: '/collection'},
     {name: 'Login', href: '/login', loggedOutOnly: true},
-    {name: 'Logout', href: '/logout', loggedInOnly: true}
+    {name: 'Logout', href: '/logout', loggedInOnly: true},
+    {name: 'User Collection', href: '/user-collection', loggedInOnly: true}
   ] as const;
 }
