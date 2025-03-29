@@ -1,5 +1,6 @@
 export interface Card {
     card_id: string
+    fs_id: string
     linkedCardID?: string
     expansion: string
     name: string

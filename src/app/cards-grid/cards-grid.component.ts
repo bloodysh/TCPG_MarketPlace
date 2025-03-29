@@ -5,15 +5,16 @@ import {Observable} from 'rxjs';
 import {AsyncPipe, NgOptimizedImage} from '@angular/common';
 import {Auth, onAuthStateChanged} from '@angular/fire/auth';
 import {UserCollectionService} from '../user-collection.service';
+import {RouterLink} from '@angular/router';
 
 @Component({
   selector: 'app-cards-grid',
-  standalone: true, // Add if it's a standalone component
   imports: [
     MatGridList,
     MatGridTile,
     AsyncPipe,
-    NgOptimizedImage
+    NgOptimizedImage,
+    RouterLink
   ],
   templateUrl: './cards-grid.component.html',
   styleUrl: './cards-grid.component.css'
@@ -26,13 +27,13 @@ export class CardsGridComponent {
 
   isLoggedIn = false;
   notification = {show: false, message: '', success: false, timer: null as any};
-  
+
   constructor() {
     onAuthStateChanged(this.auth, (user) => {
       this.isLoggedIn = !!user;
     });
   }
-  
+
   addToCollection(card: Card) {
     if (this.isLoggedIn) {
       this.collectionService.addCardToUserCollection(card);
@@ -47,12 +48,12 @@ export class CardsGridComponent {
 
   async removeFromCollection(cardId: string) {
     if (!this.isLoggedIn) return;
-    
+
     const result = await this.collectionService.removeFromCollection(cardId)
       .catch(err => console.error('Error:', err));
-      
+
     if (result) console.log('Card removed successfully');
   }
 
-  
+
 }
