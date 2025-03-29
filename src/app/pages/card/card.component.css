@@ -1,0 +1,18 @@
+.seller-header {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  align-items: center;
+}
+
+.seller-name {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+}
+
+.sale-price {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+}

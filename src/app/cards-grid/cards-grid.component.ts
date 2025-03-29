@@ -3,6 +3,7 @@ import {Card} from '@/types/Card';
 import {MatGridList, MatGridTile} from '@angular/material/grid-list';
 import {Observable} from 'rxjs';
 import {AsyncPipe, NgOptimizedImage} from '@angular/common';
+import {RouterLink} from '@angular/router';
 
 @Component({
   selector: 'app-cards-grid',
@@ -10,7 +11,8 @@ import {AsyncPipe, NgOptimizedImage} from '@angular/common';
     MatGridList,
     MatGridTile,
     AsyncPipe,
-    NgOptimizedImage
+    NgOptimizedImage,
+    RouterLink
   ],
   templateUrl: './cards-grid.component.html',
   styleUrl: './cards-grid.component.css'

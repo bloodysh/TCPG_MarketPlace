@@ -30,7 +30,7 @@ export class CardsComponent {
         where('expansion', '==', this.selectedCardSet),
         orderBy("order")
       );
-      return collectionData(cardsQuery) as Observable<Card[]>;
+      return collectionData(cardsQuery, {idField: 'fs_id'}) as Observable<Card[]>;
     }));
   }
 

@@ -1,0 +1,25 @@
+<!-- Interactive Card Showcase -->
+<div class="card-showcase">
+  <div class="card-container">
+    <div class="card" #imageElement
+         [style.transform]="transformCss()">
+      <div class="card-inner">
+        <div class="card-front">
+          <div class="card-bg"></div>
+          <div
+            class="card-shine"
+            [style.background-position]="shineBackgroundPositionCss()"
+            [style.opacity]="shineOpacityCss()"
+          ></div>
+          <img
+            [src]="imgSrc()"
+            [alt]="cardAlt()"
+            (mousemove)="mouseMove($event)"
+            (mouseleave)="mouseLeave()"
+            class="card-image"
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
