@@ -17,3 +17,10 @@
     </mat-grid-tile>
   }
 </mat-grid-list>
+
+<div class="notification" [class.visible]="notification.show" [class.success]="notification.success" [class.error]="!notification.success">
+  <div class="notification-content">
+    <span class="material-icons">{{ notification.success ? 'check_circle' : 'error' }}</span>
+    <p>{{ notification.message }}</p>
+  </div>
+</div>

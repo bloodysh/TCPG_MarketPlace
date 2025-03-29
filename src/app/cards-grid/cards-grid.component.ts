@@ -25,6 +25,7 @@ export class CardsGridComponent {
   private auth = inject(Auth);
 
   isLoggedIn = false;
+  notification = {show: false, message: '', success: false, timer: null as any};
   
   constructor() {
     onAuthStateChanged(this.auth, (user) => {
@@ -35,9 +36,13 @@ export class CardsGridComponent {
   addToCollection(card: Card) {
     if (this.isLoggedIn) {
       this.collectionService.addCardToUserCollection(card);
+      this.showNotify(`Added ${card.name} to your collection!`, true);
     } else {
       console.log('User not logged in');
     }
+  }
+  showNotify(message: string, success: boolean) {
+    this.notification = {show: true, message, success, timer: setTimeout(() => this.notification = {show: false, message: '', success: false, timer: null}, 3000)};
   }
 
   async removeFromCollection(cardId: string) {
@@ -48,4 +53,6 @@ export class CardsGridComponent {
       
     if (result) console.log('Card removed successfully');
   }
+
+  
 }
