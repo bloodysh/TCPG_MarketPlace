@@ -7,6 +7,7 @@ import { UserCollectionService } from '../user-collection.service';
 import { Card } from '@/types/Card';
 import { MatGridList, MatGridTile } from '@angular/material/grid-list';
 import { NgOptimizedImage } from '@angular/common';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
   selector: 'app-user-collection',
@@ -15,7 +16,8 @@ import { NgOptimizedImage } from '@angular/common';
     RouterLink, 
     MatGridList, 
     MatGridTile, 
-    NgOptimizedImage
+    NgOptimizedImage,
+    MatIcon
   ],
   templateUrl: './user-collection.component.html',
   styleUrl: './user-collection.component.css',

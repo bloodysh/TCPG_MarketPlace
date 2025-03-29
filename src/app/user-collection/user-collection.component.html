@@ -1,37 +1,21 @@
-<div class="user-collection-container">
-  <h2>My Collection</h2>
-  
-  <div *ngIf="loading" class="loading-indicator">
-    <p>Loading your collection...</p>
+<div class="user-collection-wrapper">
+  <div class="collection-header">
+    <h1 class="title">My Collection</h1>
+    <p class="subtitle">You have <span class="card-count">{{ cards.length }}</span> cards in your collection</p>
   </div>
-  
-  <div *ngIf="error" class="error-message">
-    <p>{{ error }}</p>
-  </div>
-  
-  <div *ngIf="!user && !loading" class="not-logged-in">
-    <p>Please log in to view your collection</p>
-    <button mat-raised-button color="primary" routerLink="/login">Log In</button>
-  </div>
-  
-  <div *ngIf="user && !loading && cards.length === 0 && !error" class="empty-collection">
-    <p>Your collection is empty</p>
-    <button mat-raised-button color="primary" routerLink="/cards">Browse Cards</button>
-  </div>
-  
+
   <div *ngIf="user && !loading && cards.length > 0" class="collection-list">
-    <p>You have {{ cards.length }} cards in your collection</p>
-    
     <mat-grid-list cols="4" rowHeight="1:1.4" gutterSize="18">
       <mat-grid-tile *ngFor="let card of cards">
         <div class="card-container">
           <img [src]="card.image" [alt]="card.name">
           <div class="card-overlay">
-            <h3>{{ card.name }}</h3>
-            <p *ngIf="card.rarity">{{ card.rarity }}</p>
-            <button mat-raised-button color="warn" (click)="removeCard(card.card_id)">
-              Remove
-            </button>
+            <div class="card-content">
+              <button class="remove-btn" (click)="removeCard(card.card_id)">
+                <mat-icon>delete</mat-icon>
+                <span>Remove</span>
+              </button>
+            </div>
           </div>
         </div>
       </mat-grid-tile>

@@ -98,3 +98,230 @@ h2 {
     cols: 1;
   }
 }
+.card-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.7) 70%, transparent 100%);
+  color: white;
+  padding: 16px;
+  transform: translateY(100%);
+  transition: transform 0.3s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.card-container:hover .card-overlay {
+  transform: translateY(0);
+}
+
+.card-overlay h3 {
+  margin: 0 0 8px;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.card-overlay p {
+  margin: 0 0 16px;
+  font-size: 14px;
+  opacity: 0.8;
+}
+
+.remove-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(244, 67, 54, 0.8);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 12px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-top: auto;
+}
+
+.remove-btn:hover {
+  background-color: rgba(244, 67, 54, 1);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+}
+
+.remove-btn mat-icon {
+  font-size: 18px;
+  height: 18px;
+  width: 18px;
+  margin-right: 6px;
+}
+
+.user-collection-wrapper {
+  padding: 2rem;
+  background-color: #f9f9f9;
+  min-height: 100vh;
+}
+
+.collection-header {
+  text-align: center;
+  margin-bottom: 3rem;
+  animation: fadeIn 0.5s ease-out;
+}
+
+.title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  color: #333;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.05);
+  letter-spacing: -0.5px;
+}
+
+.subtitle {
+  font-size: 1.1rem;
+  color: #666;
+  margin-bottom: 2rem;
+}
+
+.card-count {
+  color: #ff5722;
+  font-weight: 700;
+  position: relative;
+}
+
+.card-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.card-container:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25);
+}
+
+.card-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.card-container:hover img {
+  transform: scale(1.05);
+}
+
+.card-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(
+    to top, 
+    rgba(0, 0, 0, 0.9) 0%, 
+    rgba(0, 0, 0, 0.7) 50%, 
+    rgba(0, 0, 0, 0) 100%
+  );
+  height: 70%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.3s ease;
+}
+
+.card-container:hover .card-overlay {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.card-content {
+  padding: 1.5rem;
+}
+
+.card-title {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: white;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  margin-bottom: 0.5rem;
+}
+
+.card-rarity {
+  display: inline-block;
+  margin: 0 0 1rem 0;
+  font-size: 0.9rem;
+  color: white;
+  background: rgba(255, 255, 255, 0.2);
+  padding: 4px 12px;
+  border-radius: 20px;
+  backdrop-filter: blur(5px);
+  letter-spacing: 1px;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+.remove-btn {
+  background: linear-gradient(135deg, #ff5722 0%, #f44336 100%);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 16px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.remove-btn:hover {
+  background: linear-gradient(135deg, #f44336 0%, #d32f2f 100%);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  transform: translateY(-2px);
+}
+
+.remove-btn mat-icon {
+  font-size: 18px;
+  margin-right: 8px;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 1200px) {
+  mat-grid-list {
+    cols: 3;
+  }
+}
+
+@media (max-width: 768px) {
+  mat-grid-list {
+    cols: 2;
+  }
+  
+  .title {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  mat-grid-list {
+    cols: 1;
+  }
+  
+  .collection-header {
+    margin-bottom: 2rem;
+  }
+}
