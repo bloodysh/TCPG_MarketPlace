@@ -41,8 +41,9 @@ export class MainNavigationComponent {
   routerLinks: {name: string, href: string, loggedOutOnly?: boolean; loggedInOnly?: boolean}[] = [
     {name: 'Home', href: '/home'},
     {name: 'Collections', href: '/collection'},
+    {name: 'User Collection', href: '/user-collection', loggedInOnly: true},
     {name: 'Login', href: '/login', loggedOutOnly: true},
-    {name: 'Logout', href: '/logout', loggedInOnly: true},
-    {name: 'User Collection', href: '/user-collection', loggedInOnly: true}
+    {name: 'Logout', href: '/logout', loggedInOnly: true}
+    
   ] as const;
 }

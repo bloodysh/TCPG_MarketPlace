@@ -12,11 +12,9 @@ import { MatIcon } from '@angular/material/icon';
 @Component({
   selector: 'app-user-collection',
   imports: [
-    CommonModule, 
-    RouterLink, 
+    CommonModule,  
     MatGridList, 
     MatGridTile, 
-    NgOptimizedImage,
     MatIcon
   ],
   templateUrl: './user-collection.component.html',
