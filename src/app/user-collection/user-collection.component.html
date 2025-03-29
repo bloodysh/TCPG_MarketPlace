@@ -1,0 +1,24 @@
+<div class="user-collection-wrapper">
+  <div class="collection-header">
+    <h1 class="title">My Collection</h1>
+    <p class="subtitle">You have <span class="card-count">{{ cards.length }}</span> cards in your collection</p>
+  </div>
+
+  <div *ngIf="user && !loading && cards.length > 0" class="collection-list">
+    <mat-grid-list cols="4" rowHeight="1:1.4" gutterSize="18">
+      <mat-grid-tile *ngFor="let card of cards">
+        <div class="card-container">
+          <img [src]="card.image" [alt]="card.name">
+          <div class="card-overlay">
+            <div class="card-content">
+              <button class="remove-btn" (click)="removeCard(card.card_id)">
+                <mat-icon>delete</mat-icon>
+                <span>Remove</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </div>
+</div>
