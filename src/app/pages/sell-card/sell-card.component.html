@@ -1,0 +1,44 @@
+@let loadedCard = card();
+
+<h1>Sell {{card()?.name}}</h1>
+
+<mat-stepper orientation="vertical">
+  <mat-step [stepControl]="sellerForm">
+    <ng-template matStepLabel>@if(seller()) {Edit} @else {Create} seller profile</ng-template>
+    <form [formGroup]="sellerForm">
+      <mat-form-field>
+        <mat-label>Seller name</mat-label>
+        <input matInput placeholder="Michel's shop" formControlName="name" required>
+      </mat-form-field>
+      <div>
+        <mat-checkbox formControlName="certified">Certified</mat-checkbox>
+      </div>
+      <div>
+        <button mat-button matStepperNext>Next step</button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step [stepControl]="saleForm">
+    <ng-template matStepLabel>Create sale</ng-template>
+    <form [formGroup]="saleForm" (ngSubmit)="saveSale()">
+      <div>
+        <mat-form-field>
+          <mat-label>Description</mat-label>
+          <input matInput placeholder="Great condition!" formControlName="description" required>
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field>
+          <mat-label>Price</mat-label>
+          <input matInput type="number" step="0.01" min="0" placeholder="5.00" formControlName="price" required>
+          @if (loadedCard) {
+            <mat-hint>Recommended price: {{cardService.getCardPrice(loadedCard) | currency}}</mat-hint>
+          }
+        </mat-form-field>
+      </div>
+      <div>
+        <button mat-raised-button type="submit" matStepperNext [disabled]="saleForm.invalid">Create the sale...</button>
+      </div>
+    </form>
+  </mat-step>
+</mat-stepper>

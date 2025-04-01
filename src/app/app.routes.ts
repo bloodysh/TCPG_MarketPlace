@@ -6,14 +6,18 @@ import {AuthHandlerPageComponent} from '@/app/pages/auth/auth-handler-page/auth-
 import {LoginComponent} from '@/app/pages/auth/login/login.component';
 import {LogoutComponent} from '@/app/pages/auth/logout/logout.component';
 import { UserCollectionComponent } from './user-collection/user-collection.component';
+import {CardComponent} from '@/app/pages/card/card.component';
+import {SellCardComponent} from '@/app/pages/sell-card/sell-card.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
   { path: 'cards/:setId', component: CardsComponent },
+  { path: 'cards/:setId/:cardId', component: CardComponent },
   { path: 'collection', component: CollectionComponent },
   { path: 'auth', component: AuthHandlerPageComponent },
   { path: 'login', component: LoginComponent },
   { path: 'logout', component: LogoutComponent },
-  { path: 'user-collection', component: UserCollectionComponent } 
+  { path: 'user-collection', component: UserCollectionComponent },
+  { path: 'sell/:cardId', component: SellCardComponent }
 ];

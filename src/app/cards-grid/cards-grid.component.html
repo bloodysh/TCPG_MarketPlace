@@ -2,10 +2,11 @@
   @for (card of cards$|async; track card.card_id) {
     <mat-grid-tile>
       <div class="card-container">
-        <img [ngSrc]="card.image" width="367" height="512" alt="{{ card.name }}">
-        
+        <a [routerLink]="card.fs_id">
+          <img [ngSrc]="card.image" width="367" height="512" alt="{{ card.name }}">
+        </a>
         <div class="card-overlay">
-          
+
           <button class="add-to-collection-btn" (click)="addToCollection(card)">
             <span class="material-icons">add</span> Add to Collection
           </button>
