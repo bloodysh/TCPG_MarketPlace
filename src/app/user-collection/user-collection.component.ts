@@ -3,7 +3,7 @@ import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { Auth, onAuthStateChanged } from '@angular/fire/auth';
 import { RouterLink } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { UserCollectionService } from '../user-collection.service';
+import { UserCollectionService } from '../services/user-collection.service';
 import { Card } from '@/types/Card';
 import { MatGridList, MatGridTile } from '@angular/material/grid-list';
 import { NgOptimizedImage } from '@angular/common';

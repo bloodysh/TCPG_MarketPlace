@@ -4,7 +4,7 @@ import {MatGridList, MatGridTile} from '@angular/material/grid-list';
 import {Observable} from 'rxjs';
 import {AsyncPipe, NgOptimizedImage} from '@angular/common';
 import {Auth, onAuthStateChanged} from '@angular/fire/auth';
-import {UserCollectionService} from '../user-collection.service';
+import {UserCollectionService} from '../services/user-collection.service';
 import {RouterLink} from '@angular/router';
 
 @Component({
