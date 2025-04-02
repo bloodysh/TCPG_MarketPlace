@@ -4,7 +4,7 @@
     <p class="subtitle">You have <span class="card-count">{{ cards.length }}</span> cards in your collection</p>
   </div>
 
-  <div *ngIf="user && !loading && cards.length > 0" class="collection-list">
+  <div *ngIf="user && cards.length > 0" class="collection-list">
     <mat-grid-list cols="6" rowHeight="1:1.4" gutterSize="18">
       <mat-grid-tile *ngFor="let card of cards">
         <div class="card-container">
