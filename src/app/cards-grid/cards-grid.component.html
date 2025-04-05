@@ -1,12 +1,31 @@
+<div class="rarity-filter">
+  <div class="rarity-buttons">
+    @for (rarity of raritySymbols; track rarity) {
+      <button 
+        mat-button
+        class="rarity-btn"
+        [class.active]="selectedRarity === rarity"
+        (click)="filterByRarity(rarity)">
+        {{ rarity }}
+      </button>
+    }
+    <button
+      *ngIf="selectedRarity"
+      class="reset-btn" 
+      (click)="clearFilter()">
+      All Cards
+    </button>
+  </div>
+</div>
+
 <mat-grid-list cols="4" rowHeight="1:1.50" gutterSize="60">
-  @for (card of cards$|async; track card.card_id) {
+  @for (card of displayCards$ | async; track card.card_id) {
     <mat-grid-tile>
       <div class="card-container">
         <a [routerLink]="card.fs_id">
           <img [ngSrc]="card.image" width="367" height="512" alt="{{ card.name }}">
         </a>
         <div class="card-overlay">
-
           <button class="add-to-collection-btn" (click)="addToCollection(card)">
             <span class="material-icons">add</span> Add to Collection
           </button>
@@ -19,9 +38,6 @@
   }
 </mat-grid-list>
 
-<div class="notification" [class.visible]="notification.show" [class.success]="notification.success" [class.error]="!notification.success">
-  <div class="notification-content">
-    <span class="material-icons">{{ notification.success ? 'check_circle' : 'error' }}</span>
-    <p>{{ notification.message }}</p>
-  </div>
+<div class="notification" [class.show]="notification.show" [class.success]="notification.success" [class.error]="!notification.success">
+  {{ notification.message }}
 </div>

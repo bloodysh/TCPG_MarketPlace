@@ -87,3 +87,96 @@ img {
   margin: 0;
   font-weight: 500;
 }
+
+/* Container styling */
+.rarity-filter {
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  background: linear-gradient(145deg, #f6f8fc, #e8eef8);
+  border-radius: 16px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
+}
+
+.rarity-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+}
+
+/* Rarity buttons */
+.rarity-btn {
+  min-width: 80px;
+  padding: 12px 24px !important;
+  font-size: 1.1rem !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.5px;
+  border-radius: 100px !important;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  background: white !important;
+  color: #555 !important;
+  border: 2px solid transparent !important;
+  box-shadow: 0 3px 12px rgba(36, 62, 133, 0.08) !important;
+}
+
+.rarity-btn:hover {
+  transform: translateY(-3px);
+  background: #f9f9f9 !important;
+  border-color: #e0e6f2 !important;
+  box-shadow: 0 6px 15px rgba(36, 62, 133, 0.15) !important;
+}
+
+.rarity-btn.active {
+  background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%) !important;
+  color: white !important;
+  border-color: transparent !important;
+  box-shadow: 0 6px 20px rgba(106, 17, 203, 0.25) !important;
+}
+
+/* Reset button */
+.reset-btn {
+  min-width: 120px;
+  padding: 12px 28px;
+  border: 2px dashed #ff5252 !important;
+  background-color: transparent !important;
+  color: #ff5252 !important;
+  font-weight: 500;
+  border-radius: 100px;
+  transition: all 0.3s ease;
+  margin-left: 8px;
+}
+
+.reset-btn:hover {
+  background-color: rgba(255, 82, 82, 0.08) !important;
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(255, 82, 82, 0.15);
+}
+
+/* Add animation */
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 rgba(106, 17, 203, 0.4); }
+  70% { box-shadow: 0 0 0 10px rgba(106, 17, 203, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(106, 17, 203, 0); }
+}
+
+.rarity-btn.active {
+  animation: pulse 2s infinite;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .rarity-buttons {
+    gap: 8px;
+  }
+  
+  .rarity-btn {
+    min-width: 60px;
+    padding: 8px 16px !important;
+    font-size: 0.9rem !important;
+  }
+  
+  .reset-btn {
+    min-width: 100px;
+    padding: 8px 20px;
+  }
+}
