@@ -75,4 +75,13 @@
       <p class="cta-login">Already have an account? Log In</p>
       <button routerLink="/login" class="btn btn-primary btn-large">Login</button>
     </section>
+
+    <div class="notification" 
+     [class.show]="notification.show"
+     [class.success]="notification.success"
+     [class.error]="!notification.success">
+    {{ notification.message }}
+    </div>
   </div>
+
+  
