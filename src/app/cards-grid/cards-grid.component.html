@@ -1,24 +1,26 @@
 <div class="rarity-filter">
   <div class="rarity-buttons">
     @for (rarity of raritySymbols; track rarity) {
-      <button 
-        mat-button
-        class="rarity-btn"
+      <button
+        mat-flat-button
         [class.active]="selectedRarity === rarity"
-        (click)="filterByRarity(rarity)">
+        (click)="filterByRarity(rarity)"
+      >
         {{ rarity }}
       </button>
     }
     <button
+      mat-flat-button
+      class="reset-btn"
       *ngIf="selectedRarity"
-      class="reset-btn" 
-      (click)="clearFilter()">
+      (click)="clearFilter()"
+    >
       All Cards
     </button>
   </div>
 </div>
 
-<mat-grid-list cols="4" rowHeight="1:1.50" gutterSize="60">
+<mat-grid-list cols="4" rowHeight="1:1.70" gutterSize="60">
   @for (card of displayCards$ | async; track card.card_id) {
     <mat-grid-tile>
       <div class="card-container">
@@ -26,10 +28,10 @@
           <img [ngSrc]="card.image" width="367" height="512" alt="{{ card.name }}">
         </a>
         <div class="card-overlay">
-          <button class="add-to-collection-btn" (click)="addToCollection(card)">
+          <button mat-flat-button class="add-to-collection-btn" (click)="addToCollection(card)">
             <span class="material-icons">add</span> Add to Collection
           </button>
-          <button class="remove-from-collection-btn" (click)="removeFromCollection(card.card_id)">
+          <button mat-flat-button class="remove-from-collection-btn" (click)="removeFromCollection(card.card_id)">
             <span class="material-icons">remove</span> Remove from Collection
           </button>
         </div>

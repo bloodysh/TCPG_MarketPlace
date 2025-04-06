@@ -12,7 +12,7 @@
     @for (sale of sales; track sale.fs_id) {
       <app-sale-card [saleInput]="sale">
         <div ngProjectAs="sale-actions">
-          <button mat-raised-button>
+          <button mat-raised-button (click)="openBuyDialog(card, sale)">
             <mat-icon aria-hidden="true" aria-label="Icône de panier">shopping_cart</mat-icon>
             Buy
           </button>

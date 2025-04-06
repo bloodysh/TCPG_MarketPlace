@@ -1,0 +1,12 @@
+<h2 mat-dialog-title>Buy {{data.card.name}}</h2>
+<mat-dialog-content>
+  <p>Price: {{data.sale.price | currency}}</p>
+  <mat-form-field>
+    <mat-label>Message to the buyer</mat-label>
+    <textarea matInput placeholder="I need this card tomorrow evening!" [(ngModel)]="message"></textarea>
+  </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button (click)="onCancel()">Cancel</button>
+  <button mat-flat-button (click)="onConfirm()">Buy</button>
+</mat-dialog-actions>

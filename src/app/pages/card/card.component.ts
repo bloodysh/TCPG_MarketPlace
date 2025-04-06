@@ -8,6 +8,10 @@ import {MatAnchor, MatButton} from '@angular/material/button';
 import {CardService} from '@/app/services/card.service';
 import {SalesService} from '@/app/services/sales.service';
 import {SaleCardComponent} from '@/app/sale-card/sale-card.component';
+import {Card} from '@/types/Card';
+import {Sale} from '@/types/Sale';
+import {MatDialog} from '@angular/material/dialog';
+import {BuyDialogComponent} from '@/app/buy-dialog/buy-dialog.component';
 
 @Component({
   selector: 'app-card',
@@ -27,6 +31,7 @@ export class CardComponent {
   private readonly route = inject(ActivatedRoute);
   cardService = inject(CardService);
   salesService = inject(SalesService);
+  dialog = inject(MatDialog);
 
   card$ = this.route.paramMap.pipe(switchMap((params) => {
     const selectedCard = params.get('cardId')!;
@@ -37,4 +42,10 @@ export class CardComponent {
     const selectedCard = params.get('cardId')!;
     return this.salesService.getSalesForCard(selectedCard);
   }));
+
+  openBuyDialog(card: Card, sale: Sale) {
+    this.dialog.open(BuyDialogComponent, {
+      data: { card, sale }
+    });
+  }
 }

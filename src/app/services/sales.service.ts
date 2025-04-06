@@ -9,17 +9,45 @@ import {
   query,
   where,
   addDoc,
-  setDoc
+  setDoc,
+  orderBy,
+  limit,
+  Query
 } from '@angular/fire/firestore';
 import {map, Observable} from 'rxjs';
 import {Sale, SaleInput} from '@/types/Sale';
 import {Seller} from '@/types/Seller';
+import {Auth} from '@angular/fire/auth';
+import {Card} from '@/types/Card';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SalesService {
   firestore = inject(Firestore);
+  auth = inject(Auth);
+
+  private dataFromQuery(query: Query) {
+    return collectionData(query, {idField: 'fs_id'}).pipe(map((data) => {
+      return data.map<Sale>((sale) => ({
+        ...(sale as Omit<Sale, 'seller'>),
+        seller: docData<Seller>(sale['seller'] as DocumentReference<Seller>, {idField: 'fs_id'}) as Observable<Seller>,
+        card: docData<Card>(sale['card'] as DocumentReference<Card>, {idField: 'fs_id'}) as Observable<Card>
+      }));
+    }));
+  }
+
+  getSales() {
+    const salesCollection = collection(this.firestore, 'Sales');
+    const salesQuery = query(
+      salesCollection,
+      where('buyer', '==', null),
+      where('approved', '==', true),
+      orderBy('created', 'desc'),
+      limit(100)
+    );
+    return this.dataFromQuery(salesQuery);
+  }
 
   getSalesForCard(cardId: string) {
     const salesCollection = collection(this.firestore, 'Sales');
@@ -27,14 +55,10 @@ export class SalesService {
     const salesQuery = query(
       salesCollection,
       where('card', '==', cardRef),
+      where('buyer', '==', null),
       where('approved', '==', true)
     );
-    return collectionData(salesQuery, {idField: 'fs_id'}).pipe(map((data) => {
-      return data.map<Sale>((sale) => ({
-        ...(sale as Omit<Sale, 'seller'>),
-        seller: docData<Seller>(sale['seller'] as DocumentReference<Seller>, {idField: 'fs_id'}) as Observable<Seller>
-      }));
-    }));
+    return this.dataFromQuery(salesQuery);
   }
 
   async createSale(sale: SaleInput) {
@@ -51,16 +75,23 @@ export class SalesService {
       salesCollection,
       where('approved', '==', null)
     );
-    return collectionData(salesQuery, {idField: 'fs_id'}).pipe(map((data) => {
-      return data.map<Sale>((sale) => ({
-        ...(sale as Omit<Sale, 'seller'>),
-        seller: docData<Seller>(sale['seller'] as DocumentReference<Seller>, {idField: 'fs_id'}) as Observable<Seller>
-      }));
-    }));
+    return this.dataFromQuery(salesQuery);
   }
 
   async setApprovedState(sale: Sale, approved: boolean) {
     const saleDoc = doc(this.firestore, `Sales/${sale.fs_id}`);
     await setDoc(saleDoc, {approved}, {merge: true});
+  }
+
+  async buySale(sale: Sale, message: string) {
+    if (!this.auth.currentUser) return;
+    const saleDoc = doc(this.firestore, `Sales/${sale.fs_id}`);
+    await setDoc(saleDoc, {
+      buyer: {
+        id: this.auth.currentUser!.uid,
+        name: this.auth.currentUser!.displayName,
+        message
+      }
+    }, {merge: true});
   }
 }

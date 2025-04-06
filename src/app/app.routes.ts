@@ -9,6 +9,7 @@ import { UserCollectionComponent } from './user-collection/user-collection.compo
 import {CardComponent} from '@/app/pages/card/card.component';
 import {SellCardComponent} from '@/app/pages/sell-card/sell-card.component';
 import {AdminComponent} from '@/app/pages/admin/admin.component';
+import {SalesListComponent} from '@/app/pages/sales-list/sales-list.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -21,5 +22,6 @@ export const routes: Routes = [
   { path: 'logout', component: LogoutComponent },
   { path: 'user-collection', component: UserCollectionComponent },
   { path: 'sell/:cardId', component: SellCardComponent },
-  { path: 'admin', component: AdminComponent }
+  { path: 'admin', component: AdminComponent },
+  { path: 'sales', component: SalesListComponent }
 ];

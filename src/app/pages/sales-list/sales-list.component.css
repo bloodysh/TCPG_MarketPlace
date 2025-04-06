@@ -1,0 +1,16 @@
+.sales {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.sale-details {
+  display: flex;
+  gap: 1rem;
+}
+
+.sale-card {
+  max-width: 100%;
+  width: 100px;
+  height: auto;
+}

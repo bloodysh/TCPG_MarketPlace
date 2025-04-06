@@ -7,8 +7,8 @@ import {Auth, onAuthStateChanged} from '@angular/fire/auth';
 import {UserCollectionService} from '../services/user-collection.service';
 import {RouterLink} from '@angular/router';
 import { CardService } from '../services/card.service';
-import { get } from 'http';
 import { MatIconModule } from '@angular/material/icon';
+import {MatButton} from '@angular/material/button';
 
 @Component({
   selector: 'app-cards-grid',
@@ -19,7 +19,8 @@ import { MatIconModule } from '@angular/material/icon';
     AsyncPipe,
     NgOptimizedImage,
     RouterLink,
-    CommonModule
+    CommonModule,
+    MatButton
   ],
   templateUrl: './cards-grid.component.html',
   styleUrl: './cards-grid.component.css'
@@ -30,7 +31,7 @@ export class CardsGridComponent implements OnInit{
   private cardService = inject(CardService);
   private collectionService = inject(UserCollectionService);  // Inject the service
   private auth = inject(Auth);
-  
+
   displayCards$!: Observable<Card[]> ;
   selectedRarity: string | null = null;
   cardSet: string = '';
