@@ -6,7 +6,7 @@
         <p class="tagline">Collect, Trade, and Battle with the Ultimate Pokemon TCG Platform</p>
         <div class="hero-buttons">
           <button routerLink="/marketplace" class="btn btn-primary">Explore Marketplace</button>
-          <button routerLink="/collection" class="btn btn-outline">View Your Collection</button>
+          <button routerLink="/collection" class="btn btn-outline">View All Collections</button>
         </div>
       </div>
 
@@ -75,4 +75,13 @@
       <p class="cta-login">Already have an account? Log In</p>
       <button routerLink="/login" class="btn btn-primary btn-large">Login</button>
     </section>
+
+    <div class="notification" 
+     [class.show]="notification.show"
+     [class.success]="notification.success"
+     [class.error]="!notification.success">
+    {{ notification.message }}
+    </div>
   </div>
+
+  

@@ -4,6 +4,7 @@ import {FormControl, FormsModule, ReactiveFormsModule, Validators} from '@angula
 import {MatButton} from '@angular/material/button';
 import {MatFormField, MatLabel} from '@angular/material/form-field';
 import {MatInput} from '@angular/material/input';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-login',
@@ -22,6 +23,7 @@ export class LoginComponent {
 
   email = new FormControl("", [Validators.required, Validators.email]);
 
+  constructor(private snackBar: MatSnackBar) {}
   onClickAuth() {
     if (!this.email.value) return;
     const email = this.email.value;
@@ -30,6 +32,12 @@ export class LoginComponent {
       handleCodeInApp: true,
     }).then(() => {
       localStorage.setItem('email', email);
+    });
+    this.snackBar.open('Email sent! Please check your inbox', 'Close', {
+      duration: 5000,
+      horizontalPosition: 'center',
+      verticalPosition: 'bottom',
+      panelClass: ['success-snackbar']
     });
   }
 }

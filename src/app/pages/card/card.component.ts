@@ -6,8 +6,8 @@ import {AsyncPipe, CurrencyPipe} from '@angular/common';
 import {MatCard, MatCardContent, MatCardHeader} from '@angular/material/card';
 import {MatIcon} from '@angular/material/icon';
 import {MatAnchor, MatButton} from '@angular/material/button';
-import {CardService} from '@/app/card.service';
-import {SalesService} from '@/app/sales.service';
+import {CardService} from '@/app/services/card.service';
+import {SalesService} from '@/app/services/sales.service';
 
 @Component({
   selector: 'app-card',
