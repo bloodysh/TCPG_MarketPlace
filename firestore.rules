@@ -17,7 +17,7 @@ service cloud.firestore {
     match /Sales/{saleId} {
       allow read;
       allow create: if request.auth != null && request.resource.data.buyer == null;
-      allow update: if request.auth != null && request.resource.data.buyer is string;
+      allow update: if request.auth != null && request.resource.data.buyer != string;
     }
     match /userCollection/{userId} {
     	allow read, update, delete: if request.auth != null && request.auth.uid == userId;
