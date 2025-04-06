@@ -8,6 +8,7 @@ import {LogoutComponent} from '@/app/pages/auth/logout/logout.component';
 import { UserCollectionComponent } from './user-collection/user-collection.component';
 import {CardComponent} from '@/app/pages/card/card.component';
 import {SellCardComponent} from '@/app/pages/sell-card/sell-card.component';
+import {AdminComponent} from '@/app/pages/admin/admin.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -19,5 +20,6 @@ export const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'logout', component: LogoutComponent },
   { path: 'user-collection', component: UserCollectionComponent },
-  { path: 'sell/:cardId', component: SellCardComponent }
+  { path: 'sell/:cardId', component: SellCardComponent },
+  { path: 'admin', component: AdminComponent }
 ];

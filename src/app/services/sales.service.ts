@@ -8,7 +8,8 @@ import {
   Firestore,
   query,
   where,
-  addDoc
+  addDoc,
+  setDoc
 } from '@angular/fire/firestore';
 import {map, Observable} from 'rxjs';
 import {Sale, SaleInput} from '@/types/Sale';
@@ -25,7 +26,8 @@ export class SalesService {
     const cardRef = doc(this.firestore, `AllCards/${cardId}`);
     const salesQuery = query(
       salesCollection,
-      where('card', '==', cardRef)
+      where('card', '==', cardRef),
+      where('approved', '==', true)
     );
     return collectionData(salesQuery, {idField: 'fs_id'}).pipe(map((data) => {
       return data.map<Sale>((sale) => ({
@@ -39,7 +41,26 @@ export class SalesService {
     await addDoc(collection(this.firestore, 'Sales'), {
       ...sale,
       buyer: null,
-      approved: false,
+      approved: null,
     });
+  }
+
+  getPendingSales() {
+    const salesCollection = collection(this.firestore, 'Sales')
+    const salesQuery = query(
+      salesCollection,
+      where('approved', '==', null)
+    );
+    return collectionData(salesQuery, {idField: 'fs_id'}).pipe(map((data) => {
+      return data.map<Sale>((sale) => ({
+        ...(sale as Omit<Sale, 'seller'>),
+        seller: docData<Seller>(sale['seller'] as DocumentReference<Seller>, {idField: 'fs_id'}) as Observable<Seller>
+      }));
+    }));
+  }
+
+  async setApprovedState(sale: Sale, approved: boolean) {
+    const saleDoc = doc(this.firestore, `Sales/${sale.fs_id}`);
+    await setDoc(saleDoc, {approved}, {merge: true});
   }
 }
