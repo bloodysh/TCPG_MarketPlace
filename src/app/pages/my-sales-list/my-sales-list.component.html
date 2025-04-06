@@ -1,0 +1,20 @@
+@let sales = sales$ | async;
+
+<h1>My sales</h1>
+
+<div class="sales">
+  @for (sale of sales; track sale.fs_id) {
+    @let card = sale.card | async;
+    <app-sale-card [showCard]="true" [saleInput]="sale">
+      @if (sale.approved && sale.buyer) {
+        <p>Bought by {{sale.buyer.name}} ({{sale.buyer.message}})</p>
+      } @else if (sale.approved) {
+        <p>On sale.</p>
+      } @else if (sale) {
+        <p>Pending approval</p>
+      }
+    </app-sale-card>
+  } @empty {
+    <p>No offers, maybe yours?</p>
+  }
+</div>

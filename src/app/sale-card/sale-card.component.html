@@ -18,8 +18,21 @@
       </div>
     </mat-card-header>
     <mat-card-content>
-      <ng-content></ng-content>
+      @if (showCard()) {
+        @let card = sale.card | async;
+        @if (card) {
+          <div class="sale-details">
+            <img class="sale-card" [ngSrc]="card.image" width="367" height="512" alt="{{ card.name }}">
+            <div>
+              <div>{{card.name}} ({{card.rarity}})</div>
+              <p><em>{{card.set_details}}</em></p>
+            </div>
+          </div>
+          <hr>
+        }
+      }
       <p>{{sale.description}}</p>
+      <ng-content></ng-content>
     </mat-card-content>
   </mat-card>
 </article>

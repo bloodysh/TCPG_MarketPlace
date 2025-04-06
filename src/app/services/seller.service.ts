@@ -13,7 +13,7 @@ export class SellerService {
   seller$ = this.user$.pipe(switchMap((user) => {
     if (!user) return [null];
     const sellerDoc = doc(this.firestore, `Sellers/${user.uid}`);
-    return docData(sellerDoc) as Observable<Seller | null>;
+    return docData(sellerDoc, {idField: 'fs_id'}) as Observable<Seller | null>;
   }));
   private user: User | null = null;
 

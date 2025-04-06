@@ -5,7 +5,7 @@
 <div class="sales">
   @for (sale of sales; track sale.fs_id) {
     @let card = sale.card | async;
-    <app-sale-card [saleInput]="sale">
+    <app-sale-card [showCard]="true" [saleInput]="sale">
       <div ngProjectAs="sale-actions">
         @if (card) {
           <button mat-raised-button (click)="openBuyDialog(card, sale)">
@@ -14,17 +14,6 @@
           </button>
         }
       </div>
-      @if (card) {
-        <div class="sale-details">
-          <img class="sale-card" [ngSrc]="card.image" width="367" height="512" alt="{{ card.name }}">
-          <div>
-            <div>{{card.name}} ({{card.rarity}})</div>
-            <p><em>{{card.set_details}}</em></p>
-          </div>
-        </div>
-
-        <hr>
-      }
     </app-sale-card>
   } @empty {
     <p>No offers, maybe yours?</p>

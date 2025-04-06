@@ -1,6 +1,6 @@
 import {Component, inject} from '@angular/core';
 import {SalesService} from '@/app/services/sales.service';
-import {AsyncPipe, NgOptimizedImage} from '@angular/common';
+import {AsyncPipe} from '@angular/common';
 import {MatButton} from '@angular/material/button';
 import {MatIcon} from '@angular/material/icon';
 import {SaleCardComponent} from '@/app/sale-card/sale-card.component';
@@ -16,7 +16,6 @@ import {MatDialog} from '@angular/material/dialog';
     MatButton,
     MatIcon,
     SaleCardComponent,
-    NgOptimizedImage
   ],
   templateUrl: './sales-list.component.html',
   styleUrl: './sales-list.component.css'

@@ -16,3 +16,14 @@
   align-items: center;
   gap: .5rem;
 }
+
+.sale-details {
+  display: flex;
+  gap: 1rem;
+}
+
+.sale-card {
+  max-width: 100%;
+  width: 100px;
+  height: auto;
+}

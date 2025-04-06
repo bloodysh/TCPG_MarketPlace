@@ -50,7 +50,7 @@ export class BuyDialogComponent {
 
   async onConfirm() {
     await this.salesService.buySale(this.data.sale, this.message());
-    this.snackBar.open("Your purchase was registered successfully! Wait for the seller's response...");
+    this.snackBar.open("Your purchase was registered successfully! Wait for the seller's response...", "Close");
     this.dialogRef.close();
   }
 }

@@ -4,7 +4,8 @@
 
 <div class="sales">
   @for (sale of pendingSales; track sale.fs_id) {
-    <app-sale-card [saleInput]="sale">
+    @let card = sale.card | async;
+    <app-sale-card [showCard]="true" [saleInput]="sale">
       <div ngProjectAs="sale-actions">
         <button mat-raised-button [disabled]="lockActions()" (click)="setApprovedState(sale, true)">
           <mat-icon aria-hidden="true">check</mat-icon>

@@ -19,6 +19,7 @@ import {Sale, SaleInput} from '@/types/Sale';
 import {Seller} from '@/types/Seller';
 import {Auth} from '@angular/fire/auth';
 import {Card} from '@/types/Card';
+import {SellerService} from '@/app/services/seller.service';
 
 @Injectable({
   providedIn: 'root'
@@ -26,6 +27,14 @@ import {Card} from '@/types/Card';
 export class SalesService {
   firestore = inject(Firestore);
   auth = inject(Auth);
+  sellerService = inject(SellerService);
+  seller: Seller | null = null;
+
+  constructor() {
+    this.sellerService.getSellerProfile().subscribe((seller) => {
+      this.seller = seller;
+    });
+  }
 
   private dataFromQuery(query: Query) {
     return collectionData(query, {idField: 'fs_id'}).pipe(map((data) => {
@@ -43,6 +52,18 @@ export class SalesService {
       salesCollection,
       where('buyer', '==', null),
       where('approved', '==', true),
+      orderBy('created', 'desc'),
+      limit(100)
+    );
+    return this.dataFromQuery(salesQuery);
+  }
+
+  getMySales() {
+    if (!this.seller) return;
+    const salesCollection = collection(this.firestore, 'Sales');
+    const salesQuery = query(
+      salesCollection,
+      where('seller', '==', doc(this.firestore, `Sellers/${this.seller.fs_id}`)),
       orderBy('created', 'desc'),
       limit(100)
     );
@@ -89,7 +110,7 @@ export class SalesService {
     await setDoc(saleDoc, {
       buyer: {
         id: this.auth.currentUser!.uid,
-        name: this.auth.currentUser!.displayName,
+        name: this.auth.currentUser!.displayName || this.auth.currentUser!.email,
         message
       }
     }, {merge: true});
