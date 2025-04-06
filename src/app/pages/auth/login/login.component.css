@@ -1,0 +1,9 @@
+.success-snackbar {
+    background: #43a047;
+    color: white;
+  }
+  
+  .mat-mdc-simple-snack-bar .mdc-button__label {
+    color: white;
+  }
+  

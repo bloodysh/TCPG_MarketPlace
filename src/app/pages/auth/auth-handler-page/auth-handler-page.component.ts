@@ -23,6 +23,7 @@ export class AuthHandlerPageComponent implements OnInit {
       }
       signInWithEmailLink(this.auth, email, window.location.href).then(console.log);
       this.router.navigate(['/']);
+      sessionStorage.setItem('showLoginSuccess', 'true');
     }
   }
 }
