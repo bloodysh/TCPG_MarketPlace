@@ -1,0 +1,27 @@
+@let sellers = sellers$ | async;
+
+<h2>Registered sellers ({{sellers?.length}})</h2>
+
+<mat-grid-list cols="3" rowHeight="120px">
+  @for (seller of sellers; track seller.fs_id) {
+    <mat-grid-tile>
+      <mat-card>
+        <mat-card-content>
+          <mat-card-title>
+            {{seller.name}}
+            @if (seller?.certified) {
+              <mat-icon aria-hidden="true" aria-label="Vendeur certifié">check_circle</mat-icon>
+            }
+          </mat-card-title>
+          <mat-card-actions>
+            <mat-slide-toggle [checked]="seller.certified" (change)="handleCertifiedClick(seller)">Certified</mat-slide-toggle>
+          </mat-card-actions>
+        </mat-card-content>
+      </mat-card>
+    </mat-grid-tile>
+  } @empty {
+    <mat-grid-tile>
+      <p>No registered sellers.</p>
+    </mat-grid-tile>
+  }
+</mat-grid-list>

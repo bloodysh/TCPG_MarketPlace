@@ -1,0 +1,24 @@
+@let sale = saleInput();
+@let seller = sale.seller | async;
+
+<article>
+  <mat-card>
+    <mat-card-header>
+      <div class="seller-header">
+        <div class="seller-name">
+          <em>{{seller?.name}}</em>
+          @if (seller?.certified) {
+            <mat-icon aria-hidden="true" aria-label="Vendeur certifié">check_circle</mat-icon>
+          }
+        </div>
+        <div class="sale-price">
+          {{sale.price | currency}}
+          <ng-content select="sale-actions"></ng-content>
+        </div>
+      </div>
+    </mat-card-header>
+    <mat-card-content>
+      <p>{{sale.description}}</p>
+    </mat-card-content>
+  </mat-card>
+</article>

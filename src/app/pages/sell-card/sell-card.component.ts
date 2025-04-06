@@ -88,7 +88,7 @@ export class SellCardComponent implements OnDestroy {
       description: this.saleForm.value.description!,
       price: this.saleForm.value.price!,
     });
-    this.snackBar.open("Sale created successfully!", "Close");
+    this.snackBar.open("The sale is now being moderated by our admins. Please wait!", "Close");
     this.router.navigateByUrl(`/cards/${this.card()?.expansion}/${cardId}`);
   }
 

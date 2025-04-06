@@ -10,31 +10,14 @@
   <h2>Offers for this card</h2>
   <div class="sales">
     @for (sale of sales; track sale.fs_id) {
-      @let seller = sale.seller | async;
-      <article>
-        <mat-card>
-          <mat-card-header>
-            <div class="seller-header">
-              <div class="seller-name">
-                <em>{{seller?.name}}</em>
-                @if (seller?.certified) {
-                  <mat-icon aria-hidden="true" aria-label="Vendeur certifié">check_circle</mat-icon>
-                }
-              </div>
-              <div class="sale-price">
-                {{sale.price | currency}}
-                <button mat-raised-button>
-                  <mat-icon aria-hidden="true" aria-label="Icône de panier">shopping_cart</mat-icon>
-                  Buy
-                </button>
-              </div>
-            </div>
-          </mat-card-header>
-          <mat-card-content>
-            <p>{{sale.description}}</p>
-          </mat-card-content>
-        </mat-card>
-      </article>
+      <app-sale-card [saleInput]="sale">
+        <div ngProjectAs="sale-actions">
+          <button mat-raised-button>
+            <mat-icon aria-hidden="true" aria-label="Icône de panier">shopping_cart</mat-icon>
+            Buy
+          </button>
+        </div>
+      </app-sale-card>
     } @empty {
       <p>No offers, maybe yours?</p>
     }

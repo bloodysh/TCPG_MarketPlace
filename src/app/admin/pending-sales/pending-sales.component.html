@@ -1,0 +1,22 @@
+@let pendingSales = pendingSales$ | async;
+
+<h2>Pending sales ({{pendingSales?.length}})</h2>
+
+<div class="sales">
+  @for (sale of pendingSales; track sale.fs_id) {
+    <app-sale-card [saleInput]="sale">
+      <div ngProjectAs="sale-actions">
+        <button mat-raised-button [disabled]="lockActions()" (click)="setApprovedState(sale, true)">
+          <mat-icon aria-hidden="true">check</mat-icon>
+          Approve
+        </button>
+        <button mat-raised-button [disabled]="lockActions()" (click)="setApprovedState(sale, false)">
+          <mat-icon aria-hidden="true">close</mat-icon>
+          Decline
+        </button>
+      </div>
+    </app-sale-card>
+  } @empty {
+    <p>No offers, maybe yours?</p>
+  }
+</div>

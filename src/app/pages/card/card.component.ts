@@ -2,26 +2,23 @@ import {Component, inject} from '@angular/core';
 import {ShinyCardComponent} from '@/app/shiny-card/shiny-card.component';
 import {ActivatedRoute, RouterLink} from '@angular/router';
 import {switchMap} from 'rxjs';
-import {AsyncPipe, CurrencyPipe} from '@angular/common';
-import {MatCard, MatCardContent, MatCardHeader} from '@angular/material/card';
+import {AsyncPipe} from '@angular/common';
 import {MatIcon} from '@angular/material/icon';
 import {MatAnchor, MatButton} from '@angular/material/button';
 import {CardService} from '@/app/services/card.service';
 import {SalesService} from '@/app/services/sales.service';
+import {SaleCardComponent} from '@/app/sale-card/sale-card.component';
 
 @Component({
   selector: 'app-card',
   imports: [
     ShinyCardComponent,
     AsyncPipe,
-    MatCard,
-    MatCardHeader,
-    MatCardContent,
     MatIcon,
-    CurrencyPipe,
     MatButton,
     MatAnchor,
-    RouterLink
+    RouterLink,
+    SaleCardComponent
   ],
   templateUrl: './card.component.html',
   styleUrl: './card.component.css'
