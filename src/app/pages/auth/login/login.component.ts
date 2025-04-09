@@ -28,7 +28,7 @@ export class LoginComponent {
     if (!this.email.value) return;
     const email = this.email.value;
     sendSignInLinkToEmail(this.auth, email, {
-      url: 'http://localhost:4200/auth/',
+      url: new URL("/auth", window.location.toString()).toString(),
       handleCodeInApp: true,
     }).then(() => {
       localStorage.setItem('email', email);
